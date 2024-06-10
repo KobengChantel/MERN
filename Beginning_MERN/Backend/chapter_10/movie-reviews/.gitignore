@@ -1,0 +1,50 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+
+# Build directories
+dist/
+build/
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Debugging artifacts
+*.swp
+*.swo
+*.swn
+*.swm
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# IDE directories and files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# MacOS files
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
