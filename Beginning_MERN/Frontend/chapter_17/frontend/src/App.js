@@ -12,17 +12,19 @@ import Login from "./components/login";
 
 function App() {
 
-  const [user, setUser] = React.useState(null)
+  const [user, setUser] = React.useState(null);
+
   async function login(user = null) {// default user to null
-    setUser(user)
+    setUser(user);
   }
   async function logout() {
-    setUser(null)
+    setUser(null);
   }
 
   return (
 
     <div className="App">
+      <Router>
       <Navbar bg="light" expand="lg">
         <Navbar.Brand>Movie Reviews</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -59,7 +61,7 @@ function App() {
         }>
         </Route>
       </Switch>
-
+</Router>
     </div>
   );
 }
