@@ -34,7 +34,7 @@ const Movie = props => {
         getMovie(props.match.params.id)
     }, [props.match.params.id])
     return (
-        <div>
+        
             <div>
                 <Container>
                     <Row>
@@ -84,7 +84,7 @@ const Movie = props => {
                     </Row>
                 </Container>
             </div>
-        </div>
+        
     );
 }
 export default Movie;
