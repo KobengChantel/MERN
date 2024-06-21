@@ -69,6 +69,7 @@ import Button from 'react-bootstrap/Button';
 import React, { useState, useEffect } from 'react'
 import MovieDataService from '../services/movies'
 import { Link } from 'react-router-dom'
+
 const Movie = props => {
 
     const [movie, setMovie] = useState({
@@ -91,7 +92,7 @@ const Movie = props => {
         getMovie(props.match.params.id)
     }, [props.match.params.id])
     return (
-        <div>
+       
             <div>
                 <Container>
                     <Row>
@@ -113,11 +114,12 @@ const Movie = props => {
                             </Card>
                             <br></br>
                             <h2>Reviews</h2>
+                          
                         </Col>
                     </Row>
                 </Container>
             </div>
-        </div>
+       
     );
 }
 export default Movie;
