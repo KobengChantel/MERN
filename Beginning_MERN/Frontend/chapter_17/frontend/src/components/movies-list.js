@@ -9,11 +9,13 @@ import { Link } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 
 const MoviesList = (props) => {
+
   const [movies, setMovies] = useState([]);
   const [searchTitle, setSearchTitle] = useState("");
   const [searchRating, setSearchRating] = useState("");
   const [ratings, setRatings] = useState(["All Ratings"]);
 
+  //retriving movies and ratings at the same time
   useEffect(() => {
     retrieveMovies();
     retrieveRatings();
@@ -23,7 +25,7 @@ const MoviesList = (props) => {
     MovieDataService.getAll()
       .then(response => {
         console.log(response.data);
-        setMovies(response.data.movies);
+        setMovies(response.data.movies);//assign to movies state
       })
       .catch(e => {
         console.log(e);
@@ -62,19 +64,18 @@ const MoviesList = (props) => {
       });
   };
 
+  //find fuctions
   const findByTitle = () => {
-    find(searchTitle, "title");
+    find(searchTitle, "title")
   };
 
   const findByRating = () => {
     if (searchRating === "All Ratings") {
-      retrieveMovies();
+      retrieveMovies()
     } else {
-      find(searchRating, "rated");
+      find(searchRating, "rated")
     }
   };
-
- 
 
   return (
     <div className="App">
@@ -102,16 +103,11 @@ const MoviesList = (props) => {
               <Form.Group>
                 <Form.Control
                   as="select" onChange={onChangeSearchRating}>
-                  
-                  {ratings.map(rating => (
-                    return (
-                   
+                  {ratings.map(rating => { 
+                  return(
                     <option value={rating}>{rating}</option>
-                    )
-                  ))
-                  };
-                
-                  
+                  )
+})}
                 </Form.Control>
               </Form.Group>
               <Button
@@ -126,10 +122,9 @@ const MoviesList = (props) => {
         </Form>
 
         <Row>
-          {movies.map((movie) => { 
-          return (
-            <Col>
-            {/* <Col key={movie._id}> */}
+          {movies.map((movie) =>{ 
+            return (
+            <Col key={movie._id}>
               <Card style={{ width: '18rem' }}>
                 <Card.Img src={movie.poster + "/100px180"} />
                 <Card.Body>
@@ -142,7 +137,7 @@ const MoviesList = (props) => {
                 </Card.Body>
               </Card>
             </Col>
-          )
+            )
 })}
         </Row>
       </Container>
