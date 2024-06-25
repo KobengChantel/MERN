@@ -1,29 +1,30 @@
 import mongodb from "mongodb";
+const ObjectId = mongodb.ObjectId;
 
-const ObjectId = mongodb.ObjectId; // Correctly importing ObjectId
 let reviews;
 
 export default class ReviewsDAO {
-
   static async injectDB(conn) {
     if (reviews) {
       return;
     }
     try {
-      reviews = await conn.db(process.env.MOVIEREVIEWS_NS).collection('reviews');
+      reviews = await conn
+        .db(process.env.MOVIEREVIEWS_NS)
+        .collection("reviews");
     } catch (e) {
       console.error(`unable to establish connection handle in reviewDAO: ${e}`);
     }
   }
-
   static async addReview(movieId, user, review, date) {
     try {
       const reviewDoc = {
         name: user.name,
+
         user_id: user._id,
         date: date,
         review: review,
-        movie_id: new ObjectId(movieId) // Correct usage of ObjectId
+        movie_id:new ObjectId(movieId),
       };
       return await reviews.insertOne(reviewDoc);
     } catch (e) {
@@ -31,11 +32,10 @@ export default class ReviewsDAO {
       return { error: e };
     }
   }
-
   static async updateReview(reviewId, userId, review, date) {
     try {
       const updateResponse = await reviews.updateOne(
-        { user_id: userId, _id: new ObjectId(reviewId) }, // Correct usage of ObjectId
+        { user_id: userId, _id: ObjectId(reviewId) },
         { $set: { review: review, date: date } }
       );
       return updateResponse;
@@ -44,26 +44,15 @@ export default class ReviewsDAO {
       return { error: e };
     }
   }
-
   static async deleteReview(reviewId, userId) {
     try {
       const deleteResponse = await reviews.deleteOne({
-        _id: new ObjectId(reviewId), // Correct usage of ObjectId
+        _id: ObjectId(reviewId),
         user_id: userId,
       });
       return deleteResponse;
     } catch (e) {
       console.error(`unable to delete review: ${e}`);
-      return { error: e };
-    }
-  }
-
-  static async getMovieById(movieId) {
-    try {
-      const movie = await reviews.findOne({ _id: new ObjectId(movieId) }); // Correct usage of ObjectId
-      return movie;
-    } catch (e) {
-      console.error(`something went wrong in getMovieById: ${e}`);
       return { error: e };
     }
   }

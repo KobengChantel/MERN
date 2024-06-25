@@ -12,6 +12,7 @@ import React, { useState, useEffect } from 'react'
 import MovieDataService from '../services/movies'
 import { Link } from 'react-router-dom'
 import moment from 'moment';
+
 const Movie = props => {
 
     const [movie, setMovie] = useState({
@@ -24,7 +25,7 @@ const Movie = props => {
         MovieDataService.get(id)
             .then(response => {
                 setMovie(response.data)
-                console.log(response.data)
+                console.log("Movie obj" + response.data)
             })
             .catch(e => {
                 console.log(e)
@@ -36,14 +37,14 @@ const Movie = props => {
 
     const deleteReview = (reviewId, index) => {
         MovieDataService.deleteReview(reviewId, props.user.id)
-        .then(response => {
-            setMovie((currState) => {
-            currState.reviews.splice(index,1)
-            return({
-                ...currState
-                })
-                })
-                })
+        // .then(response => {
+        //     setMovie((currState) => {
+        //     currState.reviews.splice(index,1)
+        //     return({
+        //         ...currState
+        //         })
+        //         })
+        //         })
 
             .then(response => {
                 setMovie((prevState) => {
@@ -59,7 +60,7 @@ const Movie = props => {
     }
 
     return (
-        <div>
+        
             <div>
                 <Container>
                     <Row>
@@ -83,7 +84,8 @@ const Movie = props => {
                             <h2>Reviews</h2>
 
                             <br></br>
-                            {movie.reviews.map((review, index) => {
+                            {console.log("Movie reviews " + movie.reviews)}
+                        {movie.reviews.map((review, index) => {
                                 return (
                                     <Card key={index}>
                                         <Card.Body>
@@ -110,7 +112,7 @@ const Movie = props => {
                     </Row>
                 </Container>
             </div>
-        </div>
+       
     );
 }
 export default Movie;
