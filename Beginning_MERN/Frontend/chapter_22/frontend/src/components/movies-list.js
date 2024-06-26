@@ -16,16 +16,16 @@ const MoviesList = props => {
     const [entriesPerPage, setEntriesPerPage] = useState(0)
 
     useEffect(() => {
-        retrieveMovies()
-        retrieveRatings()
-    }, [])
+        retrieveMovies();
+        retrieveRatings();
+    }, []);
 
     useEffect(() => {
-        retrieveMovies()
-    }, [currentPage])
+        retrieveMovies();
+    }, [currentPage]);
 
     const retrieveMovies = () => {
-        MovieDataService.getAll()
+        MovieDataService.getAll(currentPage)
             .then(response => {
                 console.log(response.data)
                 setMovies(response.data.movies)

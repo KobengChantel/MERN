@@ -20,14 +20,14 @@ const MoviesList = props => {
  },[currentSearchMode])
 
     useEffect(() => {
-        retrieveMovies()
-        retrieveRatings()
-    }, [])
+        retrieveMovies();
+        retrieveRatings();
+    }, []);
 
     useEffect(() => {
-        retrieveMovies()
- retrieveNextPage() 
-    }, [currentPage])
+        retrieveMovies();
+ retrieveNextPage();
+    }, [currentPage]);
 
     const retrieveNextPage = () => {
         if(currentSearchMode === "findByTitle")
@@ -40,7 +40,7 @@ const MoviesList = props => {
 
     const retrieveMovies = () => {
         setCurrentSearchMode("")
-        MovieDataService.getAll()
+        MovieDataService.getAll(currentPage)
             .then(response => {
                 console.log(response.data)
                 setMovies(response.data.movies)
