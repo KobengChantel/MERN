@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 const Login = props => {
-
     const [name, setName] = useState("")
     const [id, setId] = useState("")
     const onChangeName = e => {
@@ -44,5 +43,5 @@ const Login = props => {
             </Form>
         </div>
     )
-}
+} 
 export default Login;

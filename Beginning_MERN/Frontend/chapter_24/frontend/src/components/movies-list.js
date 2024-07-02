@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
+
 const MoviesList = props => {
     const [movies, setMovies] = useState([])
     const [searchTitle, setSearchTitle] = useState("")
@@ -15,9 +16,10 @@ const MoviesList = props => {
     const [currentPage, setCurrentPage] = useState(0)
     const [entriesPerPage, setEntriesPerPage] = useState(0)
     const [currentSearchMode, setCurrentSearchMode] = useState("")
+    
  useEffect(() =>{
- setCurrentPage(0)
- },[currentSearchMode])
+ setCurrentPage(0);
+ },[currentSearchMode]);
 
     useEffect(() => {
         retrieveMovies();

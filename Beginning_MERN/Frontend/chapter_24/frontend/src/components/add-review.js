@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
-import MovieDataService from "../services/movies";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react'
+import MovieDataService from "../services/movies"
+import { Link } from "react-router-dom"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-
 const AddReview = props => {
-    let editing = false
-    let initialReviewState = ""
-    if(props.location.state && props.location.state.currentReview){
-        editing = true
-        initialReviewState = props.location.state.currentReview.review
-        }
-    const [review, setReview] = useState(initialReviewState)
-    // keeps track if review is submitted
-    const [submitted, setSubmitted] = useState(false)
+    let editing = false;
+    let initialReviewState = "";
+    const [review, setReview] = useState(initialReviewState);
+
+    if (props.location.state && props.location.state.currentReview) {
+        editing = true;
+        initialReviewState = props.location.state.currentReview.review;
+    }
+
+    // keeps track if review is submitted 
+    const [submitted, setSubmitted] = useState(false);
     const onChangeReview = e => {
-        const review = e.target.value
+        const review = e.target.value;
         setReview(review);
     }
     const saveReview = () => {
@@ -23,33 +24,32 @@ const AddReview = props => {
             review: review,
             name: props.user.name,
             user_id: props.user.id,
-
- movie_id: props.match.params.id // get movie id direct from url
+            movie_id: props.match.params.id // get movie id direct from url 
         }
 
-        if(editing){
-            // get existing review id
+        if (editing) {
+            // get existing review id 
             data.review_id = props.location.state.currentReview._id
             MovieDataService.updateReview(data)
-            .then(response =>{
-            setSubmitted(true);
-            console.log(response.data)
-            })
-            .catch(e =>{
-            console.log(e);
-            })
-            }
-            else{
-
-        MovieDataService.createReview(data)
-            .then(response => {
-                setSubmitted(true)
-            })
-            .catch(e => {
-                console.log(e);
-            })
+                .then(response => {
+                    setSubmitted(true);
+                    console.log(response.data)
+                })
+                .catch(e => {
+                    console.log(e);
+                })
+        }
+        else {
+            MovieDataService.createReview(data)
+                .then(response => {
+                    setSubmitted(true)
+                })
+                .catch(e => {
+                    console.log(e);
+                })
         }
     }
+
     return (
         <div>
             {submitted ? (
