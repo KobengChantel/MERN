@@ -1,5 +1,6 @@
+
 import React, { Component } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Navigate, Router } from 'react-router-dom';
 
 import AuthPage from './pages/Auth';
 import BookingsPage from './pages/Bookings';
@@ -37,14 +38,20 @@ class App extends Component {
           >
             <MainNavigation />
             <main className="main-content">
-              <Routes>
-                <Route path="/" element={<Navigate to={this.state.token ? "/events" : "/auth"} replace />} />
-                {this.state.token && <Route path="/auth" element={<Navigate to="/events" replace />} />}
-                {!this.state.token && <Route path="/auth" element={<AuthPage />} />}
-                <Route path="/events" element={<EventsPage />} />
-                {this.state.token && <Route path="/bookings" element={<BookingsPage />} />}
-                {!this.state.token && <Route path="*" element={<Navigate to="/auth" replace />} />}
-              </Routes>
+              <Router>
+                {this.state.token && <Navigate from="/" to="/events" exact />}
+                {this.state.token && (
+                  <Navigate from="/auth" to="/events" exact />
+                )}
+                {!this.state.token && (
+                  <Route path="/auth" component={AuthPage} />
+                )}
+                <Route path="/events" component={EventsPage} />
+                {this.state.token && (
+                  <Route path="/bookings" component={BookingsPage} />
+                )}
+                {!this.state.token && <Navigate to="/auth" exact />}
+              </Router>
             </main>
           </AuthContext.Provider>
         </React.Fragment>
