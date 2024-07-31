@@ -1,7 +1,5 @@
 import React from 'react';
- import { Bar as BarChart } from 'react-chartjs';
-
-
+import { Bar } from 'react-chartjs-2';
 
 const BOOKINGS_BUCKETS = {
   Cheap: {
@@ -18,9 +16,22 @@ const BOOKINGS_BUCKETS = {
   }
 };
 
-const bookingsChart = props => {
-  const chartData = { labels: [], datasets: [] };
-  let values = [];
+const BookingsChart = (props) => {
+  const chartData = {
+    labels: [],
+    datasets: [
+      {
+        label: 'Bookings',
+        backgroundColor: 'rgba(75,192,192,0.4)',
+        borderColor: 'rgba(75,192,192,1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(75,192,192,0.6)',
+        hoverBorderColor: 'rgba(75,192,192,1)',
+        data: []
+      }
+    ]
+  };
+
   for (const bucket in BOOKINGS_BUCKETS) {
     const filteredBookingsCount = props.bookings.reduce((prev, current) => {
       if (
@@ -32,25 +43,15 @@ const bookingsChart = props => {
         return prev;
       }
     }, 0);
-    values.push(filteredBookingsCount);
     chartData.labels.push(bucket);
-    chartData.datasets.push({
-      // label: "My First dataset",
-      fillColor: 'rgba(220,220,220,0.5)',
-      strokeColor: 'rgba(220,220,220,0.8)',
-      highlightFill: 'rgba(220,220,220,0.75)',
-      highlightStroke: 'rgba(220,220,220,1)',
-      data: values
-    });
-    values = [...values];
-    values[values.length - 1] = 0;
+    chartData.datasets[0].data.push(filteredBookingsCount);
   }
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <BarChart data={chartData} />
+      <Bar data={chartData} />
     </div>
   );
 };
 
- export default bookingsChart;
+export default BookingsChart;
