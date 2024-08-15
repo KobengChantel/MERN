@@ -1,15 +1,23 @@
-const mongoose = require('mongoose');
+//DEFINES THE USER SCHEMA
 
-const Schema = mongoose.Schema({
-email: {
-  type: String,
-  require: true
-},
+mongoose = require('mongoose');
 
-password: {
-  type: String,
-  require: true
-}
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true }, // Fixed 'require' to 'required'
+  email: {
+    type: String,
+    required: true, // Fixed 'require' to 'required'
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true // Fixed 'require' to 'required'
+  },
+  transactions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Transaction' }],
+  budgets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Budget' }],
+  categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }]
 });
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = { User };
