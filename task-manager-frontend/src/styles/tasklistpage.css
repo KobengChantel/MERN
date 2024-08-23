@@ -1,0 +1,32 @@
+/* tasklistpage.css */
+.tasklistpage-container {
+  padding: 20px;
+}
+
+.task-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.task-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.task-form input,
+.task-form textarea {
+  display: block;
+  margin: 10px 0;
+  width: 100%;
+  padding: 8px;
+}
+
+.task-form button {
+  margin-right: 5px;
+}
+
+.error-message {
+  color: red;
+}

@@ -37,15 +37,11 @@ module.exports = buildSchema(`
     logout: Boolean
   }
 
-  type Subscription {
-    taskAdded(userId: ID!): Task
-    taskUpdated(userId: ID!): Task
-    taskDeleted(userId: ID!): Task
-  }
+ 
 
   schema {
     query: Query
     mutation: Mutation
-    subscription: Subscription
+   
   }
 `);

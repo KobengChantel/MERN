@@ -1,0 +1,165 @@
+/* Centering the content */
+.taskpage-container {
+  margin: 20px;
+}
+
+/* Styling the task form */
+.task-form {
+  margin-bottom: 20px;
+}
+
+.task-form input,
+.task-form textarea {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.task-form button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  margin-top: 10px;
+}
+
+.task-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Task list styling */
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.task-item h3 {
+  margin-top: 0;
+}
+
+/* Profile info styling */
+.profile-info {
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 10px;
+}
+
+/* Existing styles */
+
+.profile-button {
+  margin-top: 20px;
+  background-color: #17a2b8;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.profile-button:hover {
+  background-color: #138496;
+}
+.taskpage-container {
+  padding: 20px;
+}
+
+.logout-button, .profile-button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+.profile-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.profile-button:hover {
+  background-color: #0056b3;
+}
+
+.taskpage-container {
+  padding: 20px;
+  position: relative; /* Needed for absolute positioning of buttons */
+}
+
+.buttons-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.logout-button, .profile-button {
+  padding: 10px 20px;
+  margin-left: 10px; /* Space between buttons */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  position: relative;
+}
+
+.logout-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+.profile-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.profile-button:hover {
+  background-color: #0056b3;
+}
+
+/* Additional styles for task form and task list */
+.task-form {
+  margin-top: 40px;
+}
+
+.task-list {
+  margin-top: 20px;
+}
+
+.error-message {
+  color: #dc3545;
+}
+

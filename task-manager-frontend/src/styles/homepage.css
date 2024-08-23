@@ -1,0 +1,51 @@
+/* Centering the content */
+.homepage-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Styling the heading */
+.homepage-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Styling forms */
+.homepage-form {
+  display: inline-block;
+  text-align: left;
+  margin: 0 auto;
+}
+
+.homepage-form input {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.homepage-form button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  margin-top: 10px;
+}
+
+.homepage-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 10px;
+}
