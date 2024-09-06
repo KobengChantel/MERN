@@ -1,48 +1,67 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { CREATE_USER, LOGIN } from '../graphql/mutations'; // Update this import
-import '../styles/homepage.css'; // Import the CSS file
+import { CREATE_USER, LOGIN } from '../graphql/mutations';
+import { useNavigate } from 'react-router-dom';
+import '../styles/homepage.css'; // Ensure the path matches your project structure
 
 const HomePage = () => {
-  const [isRegistering, setIsRegistering] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false); // Toggle between login and registration
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [createUser, { loading: registerLoading, error: registerError }] = useMutation(CREATE_USER);
-  const [loginUser, { loading: loginLoading, error: loginError }] = useMutation(LOGIN); // Use LOGIN mutation
+  const [loginUser, { loading: loginLoading, error: loginError }] = useMutation(LOGIN);
+  const navigate = useNavigate();
 
+  // Handle Registration
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await createUser({ variables: { username, email, password } });
-      localStorage.setItem('token', data.createUser.token);
-      setUsername('');
-      setEmail('');
-      setPassword('');
+      if (data.createUser) {
+        setSuccessMessage('Account created successfully! Redirecting to login...');
+        setErrorMessage('');
+        setTimeout(() => {
+          setIsRegistering(false); // Switch to login view after success
+        }, 2000);
+      }
     } catch (err) {
-      console.error(err);
+      console.error('Registration error:', err);
+      setSuccessMessage('');
+      setErrorMessage('Registration failed. Please try again.');
     }
   };
 
+  // Handle Login
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await loginUser({ variables: { username: loginUsername, password: loginPassword } });
-      localStorage.setItem('token', data.login.token);
-      setLoginUsername('');
-      setLoginPassword('');
+      if (data.login.token) {
+        localStorage.setItem('token', data.login.token);
+        localStorage.setItem('userId', data.login.user.id);
+        setSuccessMessage('Login successful! Redirecting to your tasks...');
+        setErrorMessage('');
+        setTimeout(() => {
+          navigate('/tasks');
+        }, 2000); // Delay for user feedback
+      }
     } catch (err) {
-      console.error(err);
+      console.error('Login error:', err);
+      setSuccessMessage('');
+      setErrorMessage('Login failed. Please check your credentials and try again.');
     }
   };
 
   return (
     <div className="homepage-container">
       <h1 className="homepage-title">Welcome to the Task Manager</h1>
-      
+
       {isRegistering ? (
         <form onSubmit={handleRegisterSubmit} className="homepage-form">
           <h2>Register</h2>
@@ -71,6 +90,8 @@ const HomePage = () => {
             Register
           </button>
           {registerError && <p className="error-message">Error: {registerError.message}</p>}
+          {successMessage && <p className="success-message">{successMessage}</p>}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button type="button" onClick={() => setIsRegistering(false)} className="homepage-button">
             Back to Login
           </button>
@@ -97,6 +118,8 @@ const HomePage = () => {
               Login
             </button>
             {loginError && <p className="error-message">Error: {loginError.message}</p>}
+            {successMessage && <p className="success-message">{successMessage}</p>}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
           </form>
           <button type="button" onClick={() => setIsRegistering(true)} className="homepage-button">
             Register

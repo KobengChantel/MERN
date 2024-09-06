@@ -53,7 +53,8 @@ module.exports = {
 
     return savedTask;
   },
-// UPDATETASK
+
+  // Update an existing task
   updateTask: async ({ id, title, description, dueDate, priority, completed }) => {
     const task = await Task.findById(id);
 
@@ -61,6 +62,7 @@ module.exports = {
       throw new Error('Task not found');
     }
 
+    // Update the task fields if provided
     task.title = title || task.title;
     task.description = description || task.description;
     task.dueDate = dueDate || task.dueDate;
@@ -71,17 +73,33 @@ module.exports = {
     return updatedTask;
   },
 
+  // Delete an existing task
+  // deleteTask: async ({ id }) => {
+  //   const task = await Task.findById(id);
+
+  //   if (!task) {
+  //     throw new Error('Task not found');
+  //   }
+
+  //   // Use findByIdAndRemove instead of task.remove()
+  //   await Task.findByIdAndRemove(id);
+  //   return task; // Return the deleted task object
+  // },
+
   deleteTask: async ({ id }) => {
     const task = await Task.findById(id);
-
+  
     if (!task) {
       throw new Error('Task not found');
     }
-
-    await task.remove();
+  
+    // Use deleteOne as an alternative
+    await Task.deleteOne({ _id: id });
     return task;
   },
+  
 
+  // User login logic
   login: async ({ username, password }) => {
     const user = await User.findOne({ username });
 
@@ -98,10 +116,10 @@ module.exports = {
     return {
       user,
       token: generateToken(user._id),
-      
     };
   },
 
+  // Handle logout
   logout: () => {
     // Typically handled on the client side by clearing the token
     return true;

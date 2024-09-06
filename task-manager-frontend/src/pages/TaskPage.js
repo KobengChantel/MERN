@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_TASKS, GET_USER } from '../graphql/queries';
-import { CREATE_TASK, UPDATE_TASK, DELETE_TASK } from '../graphql/mutations';
+import { GET_TASKS, GET_USER } from '../graphql/queries'; // Adjust path if necessary
+import { CREATE_TASK, UPDATE_TASK, DELETE_TASK } from '../graphql/mutations'; // Adjust path if necessary
 import { useNavigate } from 'react-router-dom';
 import '../styles/taskpage.css'; // Import the CSS file
+// import { DELETE_TASK } from '../graphql/mutations'; // Adjust the path if necessary
+
 
 const TaskPage = () => {
   const [newTask, setNewTask] = useState({ title: '', description: '', dueDate: '', priority: '' });
   const [editTask, setEditTask] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const { data: tasksData, refetch } = useQuery(GET_TASKS);
-  const { data: userData } = useQuery(GET_USER);
+
+  const { data: userData } = useQuery(GET_USER, {
+    variables: { id: localStorage.getItem('userId') }
+  });
+
+  const { data: tasksData, refetch } = useQuery(GET_TASKS, {
+    variables: { userId: localStorage.getItem('userId') },
+    skip: !userData // Skip query if userData is not available yet
+  });
+
   const [createTask, { error: createError }] = useMutation(CREATE_TASK);
   const [updateTask, { error: updateError }] = useMutation(UPDATE_TASK);
   const [deleteTask, { error: deleteError }] = useMutation(DELETE_TASK);
@@ -72,7 +82,7 @@ const TaskPage = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
-    navigate('/login'); // Redirect to login page
+    navigate('/'); // Redirect to login page
   };
 
   return (
@@ -114,9 +124,9 @@ const TaskPage = () => {
       </form>
 
       <h2>My Tasks</h2>
-      {tasksData && tasksData.tasks.length > 0 ? (
+      {tasksData && tasksData.getTasks && tasksData.getTasks.length > 0 ? (
         <ul className="task-list">
-          {tasksData.tasks.map((task) => (
+          {tasksData.getTasks.map((task) => (
             <li key={task.id} className="task-item">
               <h3>{task.title}</h3>
               <p>{task.description}</p>
@@ -128,7 +138,7 @@ const TaskPage = () => {
           ))}
         </ul>
       ) : (
-        <p>No tasks available.</p>
+        <p>No tasks available.Create a task on the above button</p>
       )}
     </div>
   );

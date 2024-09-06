@@ -1,14 +1,15 @@
+
 import { gql } from '@apollo/client';
 
 export const CREATE_USER = gql`
   mutation CreateUser($username: String!, $email: String!, $password: String!) {
     createUser(username: $username, email: $email, password: $password) {
+      token
       user {
         id
         username
         email
       }
-      token
     }
   }
 `;
@@ -43,7 +44,6 @@ export const DELETE_TASK = gql`
   mutation DeleteTask($id: ID!) {
     deleteTask(id: $id) {
       id
-      title
     }
   }
 `;
@@ -51,12 +51,12 @@ export const DELETE_TASK = gql`
 export const LOGIN = gql`
   mutation Login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
+      token
       user {
         id
         username
         email
       }
-      token
     }
   }
 `;

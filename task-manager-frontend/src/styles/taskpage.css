@@ -1,165 +1,127 @@
-/* Centering the content */
+/* taskpage.css */
+
+/* Container for the entire page */
 .taskpage-container {
-  margin: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #94a0f8; /* Light gray background */
 }
 
-/* Styling the task form */
-.task-form {
+/* Header buttons */
+.header-buttons {
+  display: flex;
+  justify-content: flex-end;
   margin-bottom: 20px;
+}
+
+.header-buttons button {
+  background-color: #6c757d; /* Darker gray background */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-left: 10px;
+  border-radius: 20px; /* Rounded buttons */
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.header-buttons button:hover {
+  background-color: #5a6268; /* Darker gray on hover */
+}
+
+/* Task form */
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  background-color: #ffffff; /* White background for the form */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .task-form input,
 .task-form textarea {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
   padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 16px;
+  background-color: #e9ecef; /* Light gray background for inputs */
+}
+
+.task-form input[type="date"] {
+  cursor: pointer;
 }
 
 .task-form button {
-  width: 100%;
-  padding: 10px;
-  font-size: 1rem;
+  background-color: #28a745; /* Green background */
+  color: #fff;
   border: none;
-  border-radius: 5px;
+  padding: 10px 20px;
+  border-radius: 20px; /* Rounded buttons */
   cursor: pointer;
-  background-color: #007bff;
-  color: white;
-  margin-top: 10px;
+  font-size: 16px;
 }
 
 .task-form button:hover {
-  background-color: #0056b3;
+  background-color: #218838; /* Darker green on hover */
 }
 
-/* Task list styling */
+/* Success and error messages */
+.success-message {
+  color: #28a745; /* Green for success */
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.error-message {
+  color: #dc3545; /* Red for errors */
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* Task list */
 .task-list {
-  list-style: none;
+  list-style-type: none;
   padding: 0;
 }
 
 .task-item {
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 15px;
   margin-bottom: 10px;
   border-radius: 5px;
+  background-color: #ffffff; /* White background for tasks */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .task-item h3 {
   margin-top: 0;
 }
 
-/* Profile info styling */
-.profile-info {
-  margin-bottom: 20px;
-}
-
-.error-message {
-  color: red;
-  font-size: 0.875rem;
-  margin-top: 10px;
-}
-
-/* Existing styles */
-
-.profile-button {
-  margin-top: 20px;
-  background-color: #17a2b8;
+.task-item button {
+  background-color: #dc3545; /* Red background */
   color: #fff;
-  padding: 10px;
   border: none;
-  border-radius: 4px;
+  padding: 5px 10px;
+  border-radius: 20px; /* Rounded buttons */
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
+  font-size: 14px;
+  margin-right: 5px;
 }
 
-.profile-button:hover {
-  background-color: #138496;
-}
-.taskpage-container {
-  padding: 20px;
+.task-item button:hover {
+  background-color: #c82333; /* Darker red on hover */
 }
 
-.logout-button, .profile-button {
-  padding: 10px 20px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
+/* Additional styles */
+.task-item button:last-child {
+  background-color: #007bff; /* Blue background for the other button */
 }
 
-.logout-button {
-  background-color: #dc3545;
-  color: white;
+.task-item button:last-child:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
-
-.logout-button:hover {
-  background-color: #c82333;
-}
-
-.profile-button {
-  background-color: #007bff;
-  color: white;
-}
-
-.profile-button:hover {
-  background-color: #0056b3;
-}
-
-.taskpage-container {
-  padding: 20px;
-  position: relative; /* Needed for absolute positioning of buttons */
-}
-
-.buttons-container {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-
-.logout-button, .profile-button {
-  padding: 10px 20px;
-  margin-left: 10px; /* Space between buttons */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  position: relative;
-}
-
-.logout-button {
-  background-color: #dc3545;
-  color: white;
-}
-
-.logout-button:hover {
-  background-color: #c82333;
-}
-
-.profile-button {
-  background-color: #007bff;
-  color: white;
-}
-
-.profile-button:hover {
-  background-color: #0056b3;
-}
-
-/* Additional styles for task form and task list */
-.task-form {
-  margin-top: 40px;
-}
-
-.task-list {
-  margin-top: 20px;
-}
-
-.error-message {
-  color: #dc3545;
-}
-

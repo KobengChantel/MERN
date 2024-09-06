@@ -4,6 +4,7 @@ import { CREATE_TASK, DELETE_TASK, UPDATE_TASK } from '../graphql/mutations';
 import { GET_USER } from '../graphql/queries'; // Assume you have a query to get user info
 import { useNavigate } from 'react-router-dom';
 import '../styles/taskmanagement.css';
+import { format } from 'date-fns';
 
 const TaskManagementPage = () => {
   const [newTask, setNewTask] = useState({ title: '', description: '', dueDate: '', priority: '' });
@@ -41,7 +42,6 @@ const TaskManagementPage = () => {
   const fetchTasks = async () => {
     try {
       // Fetch tasks directly from your API or backend service
-      // Replace this with the actual API call or logic
       const response = await fetch('/api/tasks', {
         method: 'GET',
         headers: {
@@ -185,17 +185,22 @@ const TaskManagementPage = () => {
       )}
 
       <h2>Tasks</h2>
-      {tasks.map((task) => (
-        <div key={task.id} className="task-item">
-          <h3>{task.title}</h3>
-          <p>{task.description}</p>
-          <p><strong>Due Date:</strong> {task.dueDate}</p>
-          <p><strong>Priority:</strong> {task.priority}</p>
-          <button onClick={() => handleViewTask(task)}>View</button>
-          <button onClick={() => handleEditTask(task)}>Edit</button>
-          <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
-        </div>
-      ))}
+      {tasks.map((task) => {
+        // Format dueDate to 'dd/MM/yyyy'
+        const formattedDueDate = format(new Date(task.dueDate), 'dd/MM/yyyy');
+
+        return (
+          <div key={task.id} className="task-item">
+            <h3>{task.title}</h3>
+            <p>{task.description}</p>
+            <p><strong>Due Date:</strong> {formattedDueDate}</p>
+            <p><strong>Priority:</strong> {task.priority}</p>
+            <button onClick={() => handleViewTask(task)}>View</button>
+            <button onClick={() => handleEditTask(task)}>Edit</button>
+            <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
+          </div>
+        );
+      })}
     </div>
   );
 };

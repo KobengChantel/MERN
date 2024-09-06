@@ -6,7 +6,8 @@ const schema = require('./graphql/schema');
 const resolvers = require('./graphql/resolvers');
 const authMiddleware = require('./utils/authMiddleware');
 const cors = require('cors');
-
+const multer = require('multer');
+const path = require('path');
 dotenv.config();
 
 connectDB();
@@ -27,6 +28,27 @@ app.use(
   })
 );
 
+
+// Setup multer storage configuration
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Directory to save uploaded files
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, Date.now() + ext); // Filename with timestamp
+  }
+});
+
+const upload = multer({ storage });
+
+app.post('/upload', upload.single('profilePicture'), (req, res) => {
+  const file = req.file;
+  if (!file) {
+    return res.status(400).send('No file uploaded.');
+  }
+  res.json({ filePath: `/uploads/${file.filename}` }); // Respond with file path
+});
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
