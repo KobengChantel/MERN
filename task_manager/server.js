@@ -5,7 +5,7 @@ const connectDB = require('./config/db');
 const schema = require('./graphql/schema');
 const resolvers = require('./graphql/resolvers');
 const authMiddleware = require('./utils/authMiddleware');
-const cors = require('cors');
+const cors = require("cors");
 const multer = require('multer');
 const path = require('path');
 dotenv.config();
