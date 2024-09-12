@@ -50,7 +50,7 @@ export const DELETE_TASK = gql`
 
 export const LOGIN = gql`
   mutation Login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
+    login(email: $username, password: $password) {
       token
       user {
         id
@@ -64,5 +64,34 @@ export const LOGIN = gql`
 export const LOGOUT = gql`
   mutation Logout {
     logout
+  }
+`;
+
+export const UPDATE_USER = gql`
+  mutation UpdateUser(
+    $id: ID!,
+    $username: String,
+    $email: String,
+    $password: String,
+    $gender: String,
+    $age: Int,
+    $city: String
+  ) {
+    updateUser(
+      id: $id,
+      username: $username,
+      email: $email,
+      password: $password,
+      gender: $gender,
+      age: $age,
+      city: $city
+    ) {
+      id
+      username
+      email
+      city
+      gender
+      age
+    }
   }
 `;

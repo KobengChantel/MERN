@@ -7,6 +7,9 @@ export const GET_USER = gql`
       id
       username
       email
+      city
+      gender
+      age
       tasks {
         id
         title

@@ -10,6 +10,7 @@ import { AuthProvider } from './context/AuthContext';
 import TaskPage from './pages/TaskPage';
 import UserProfilePage from './pages/UserProfilePage';
 import ProtectedRoute from './components/ProtectedRoute';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import HomePage from './pages/HomePage';
 

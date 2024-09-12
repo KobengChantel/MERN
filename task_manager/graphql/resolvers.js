@@ -1,6 +1,8 @@
+
 const User = require('../models/User');
 const Task = require('../models/Task');
 const generateToken = require('../utils/generateToken');
+const moment = require('moment');
 
 module.exports = {
   getUser: async ({ id }) => {
@@ -11,7 +13,7 @@ module.exports = {
     return await Task.find({ user: userId });
   },
 
-  createUser: async ({ username, email, password }) => {
+  createUser: async ({ username, email, password, gender, age, city }) => {
     const userExists = await User.findOne({ email });
 
     if (userExists) {
@@ -22,6 +24,9 @@ module.exports = {
       username,
       email,
       password,
+      gender,
+      age,
+      city,
     });
 
     const savedUser = await user.save();
@@ -68,40 +73,30 @@ module.exports = {
     task.dueDate = dueDate || task.dueDate;
     task.priority = priority || task.priority;
     task.completed = completed !== undefined ? completed : task.completed;
+// Format the dueDate if provided
+if (dueDate) {
+  const formattedDate = moment(dueDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+  task.dueDate = formattedDate;
+}
 
     const updatedTask = await task.save();
     return updatedTask;
   },
 
-  // Delete an existing task
-  // deleteTask: async ({ id }) => {
-  //   const task = await Task.findById(id);
-
-  //   if (!task) {
-  //     throw new Error('Task not found');
-  //   }
-
-  //   // Use findByIdAndRemove instead of task.remove()
-  //   await Task.findByIdAndRemove(id);
-  //   return task; // Return the deleted task object
-  // },
-
   deleteTask: async ({ id }) => {
     const task = await Task.findById(id);
-  
+
     if (!task) {
       throw new Error('Task not found');
     }
-  
-    // Use deleteOne as an alternative
+
     await Task.deleteOne({ _id: id });
     return task;
   },
-  
 
-  // User login logic
-  login: async ({ username, password }) => {
-    const user = await User.findOne({ username });
+  // User login logic (updated to use email)
+  login: async ({ email, password }) => {
+    const user = await User.findOne({ email });
 
     if (!user) {
       throw new Error('Invalid credentials');
@@ -121,7 +116,38 @@ module.exports = {
 
   // Handle logout
   logout: () => {
-    // Typically handled on the client side by clearing the token
-    return true;
+    return true; // Typically handled by clearing the token on the client side
+  },
+  
+};
+
+const resolvers = {
+  Mutation: {
+    updateUser: async (_, { id, username, email, city, gender, age }) => {
+      try {
+        const user = await User.findById(id); // Fetch the user
+        if (!user) {
+          throw new Error('User not found');
+        }
+
+        // Update user fields
+        if (username) user.username = username;
+        if (email) user.email = email;
+        if (city) user.city = city;
+        if (gender) user.gender = gender;
+        if (age) user.age = age;
+
+        await user.save(); // Save the updated user
+
+        return user;
+      } catch (error) {
+        console.error('Error updating user:', error);
+        throw new Error('Error updating user');
+      }
+    },
   },
 };
+
+
+
+ 

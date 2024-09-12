@@ -11,6 +11,7 @@ const HomePage = () => {
   const [password, setPassword] = useState('');
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Manage password visibility
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -79,13 +80,22 @@ const HomePage = () => {
             placeholder="Email"
             required
           />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            required
-          />
+          <div className="password-container">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              required
+            />
+            <button
+              type="button"
+              className="show-password-button"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? '👁️' : '👁️'}
+            </button>
+          </div>
           <button type="submit" className="homepage-button" disabled={registerLoading}>
             Register
           </button>
@@ -104,16 +114,25 @@ const HomePage = () => {
               type="text"
               value={loginUsername}
               onChange={(e) => setLoginUsername(e.target.value)}
-              placeholder="Username"
+              placeholder="Email"
               required
             />
-            <input
-              type="password"
-              value={loginPassword}
-              onChange={(e) => setLoginPassword(e.target.value)}
-              placeholder="Password"
-              required
-            />
+            <div className="password-container">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                placeholder="Password"
+                required
+              />
+              <button
+                type="button"
+                className="show-password-button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? '👁️' : '👁️'}
+              </button>
+            </div>
             <button type="submit" className="homepage-button" disabled={loginLoading}>
               Login
             </button>

@@ -16,6 +16,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  gender: { type: String },
+  age: { type: Number },
+  city: { type: String },
   tasks: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -35,6 +38,14 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
+};
+
+// Generate reset token
+userSchema.methods.generateResetToken = function () {
+  const resetToken = crypto.randomBytes(20).toString('hex');
+  this.resetPasswordToken = resetToken;
+  this.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+  return resetToken;
 };
 
 const User = mongoose.model('User', userSchema);

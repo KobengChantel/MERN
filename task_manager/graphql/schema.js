@@ -6,6 +6,9 @@ module.exports = buildSchema(`
     username: String!
     email: String!
     tasks: [Task]
+     city: String
+    gender: String
+    age: Int
   }
 
   type Task {
@@ -29,12 +32,13 @@ module.exports = buildSchema(`
   }
 
   type Mutation {
-    createUser(username: String!, email: String!, password: String!): AuthPayload
+    createUser(username: String!, email: String!, password: String!, gender: String, age: Int, city: String): AuthPayload
     createTask(title: String!, description: String, dueDate: String, priority: String, userId: ID!): Task
     updateTask(id: ID!, title: String, description: String, dueDate: String, priority: String, completed: Boolean): Task
     deleteTask(id: ID!): Task
-    login(username: String!, password: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
     logout: Boolean
+   updateUser(id: ID!, username: String, email: String, password: String, gender: String, age: Int, city: String): User
   }
 
  
