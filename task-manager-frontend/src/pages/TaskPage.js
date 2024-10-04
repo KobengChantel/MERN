@@ -3,15 +3,19 @@ import { useQuery, useMutation } from '@apollo/client';
 import { GET_TASKS, GET_USER } from '../graphql/queries'; // Adjust path if necessary
 import { CREATE_TASK, UPDATE_TASK, DELETE_TASK } from '../graphql/mutations'; // Adjust path if necessary
 import { useNavigate } from 'react-router-dom';
+import { FaEllipsisV } from 'react-icons/fa'; // Import the three-dot icon
 import '../styles/taskpage.css'; // Import the CSS file
-// import { DELETE_TASK } from '../graphql/mutations'; // Adjust the path if necessary
 
+import TaskSearch from '../components/TaskSearch';
+import ArchivedTasks from '../components/ArchivedTasks';
+import TaskStatistics from '../components/TaskStatistics';
 
 const TaskPage = () => {
   const [newTask, setNewTask] = useState({ title: '', description: '', dueDate: '', priority: '' });
   const [editTask, setEditTask] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false); // State to handle dropdown menu visibility
 
   const { data: userData } = useQuery(GET_USER, {
     variables: { id: localStorage.getItem('userId') }
@@ -29,7 +33,7 @@ const TaskPage = () => {
 
   useEffect(() => {
     if (editTask) {
-      setNewTask(editTask);
+      setNewTask(editTask); // Populate the form with the task being edited
     }
   }, [editTask]);
 
@@ -77,22 +81,40 @@ const TaskPage = () => {
 
   const handleUserProfileClick = () => {
     navigate('/userprofile'); // Redirect to user profile page
+    setMenuOpen(false); // Close the menu
   };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     navigate('/'); // Redirect to login page
+    setMenuOpen(false); // Close the menu
   };
+
+  const userId = localStorage.getItem('userId'); // Retrieve user ID
 
   return (
     <div className="taskpage-container">
-      <div className="header-buttons">
-        <button className="user-profile-button" onClick={handleUserProfileClick}>User Profile</button>
-        <button className="logout-button" onClick={handleLogout}>Logout</button>
+      <div className="header">
+        <button
+          className="menu-button"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <FaEllipsisV />
+        </button>
+        {menuOpen && (
+          <div className="dropdown-menu">
+            <button className="dropdown-item" onClick={handleUserProfileClick}>User Profile</button>
+            <button className="dropdown-item" onClick={handleLogout}>Logout</button>
+          </div>
+        )}
       </div>
 
       <h1>Task Manager</h1>
+      <TaskSearch />
+      <ArchivedTasks userId={userId} />
+      <TaskStatistics userId={userId} />
+
       <h2>{editTask ? 'Edit Task' : 'Create Task'}</h2>
       <form onSubmit={editTask ? handleUpdateTask : handleCreateTask} className="task-form">
         <input
@@ -112,12 +134,16 @@ const TaskPage = () => {
           value={newTask.dueDate}
           onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })}
         />
-        <input
-          type="text"
+        <select
           value={newTask.priority}
           onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
-          placeholder="Priority"
-        />
+          required
+        >
+          <option value="">Select Priority</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
         <button type="submit">{editTask ? 'Update Task' : 'Create Task'}</button>
         {successMessage && <p className="success-message">{successMessage}</p>}
         {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -138,7 +164,7 @@ const TaskPage = () => {
           ))}
         </ul>
       ) : (
-        <p>No tasks available.Create a task on the above button</p>
+        <p>No tasks available. Create a task above!</p>
       )}
     </div>
   );

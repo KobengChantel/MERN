@@ -3,6 +3,7 @@ const { graphqlHTTP } = require('express-graphql');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const schema = require('./graphql/schema');
+// const resolvers = require('./graphql/resolvers/index');
 const resolvers = require('./graphql/resolvers');
 const authMiddleware = require('./utils/authMiddleware');
 const cors = require("cors");

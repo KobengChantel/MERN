@@ -12,6 +12,10 @@ const taskSchema = new mongoose.Schema({
   // attachments: [{ type: String }], // URLs or file paths
   // progress: { type: Number, default: 0 }, // Percentage
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  archived: { // New field
+    type: Boolean,
+    default: false,
+  }
 });
 
 const Task = mongoose.model('Task', taskSchema);

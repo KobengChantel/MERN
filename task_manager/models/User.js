@@ -16,9 +16,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  gender: { type: String },
-  age: { type: Number },
-  city: { type: String },
+  gender: String,
+  age: Number, // Use Number instead of Int
+  city: String,
   tasks: [
     {
       type: mongoose.Schema.Types.ObjectId,

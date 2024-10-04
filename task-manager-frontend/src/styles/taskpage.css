@@ -1,12 +1,10 @@
-/* taskpage.css */
-
 /* Container for the entire page */
 .taskpage-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
-  background-color: #94a0f8; /* Light gray background */
+  background-color: #8A9A5B; /* Moss green background */
 }
 
 /* Header buttons */
@@ -17,7 +15,7 @@
 }
 
 .header-buttons button {
-  background-color: #6c757d; /* Darker gray background */
+  background-color: #556B2F; /* Dark forest green background */
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -28,7 +26,7 @@
 }
 
 .header-buttons button:hover {
-  background-color: #5a6268; /* Darker gray on hover */
+  background-color: #6B8E23; /* Forest green on hover */
 }
 
 /* Task form */
@@ -57,7 +55,7 @@
 }
 
 .task-form button {
-  background-color: #28a745; /* Green background */
+  background-color: #6B8E23; /* Forest green background */
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -67,12 +65,12 @@
 }
 
 .task-form button:hover {
-  background-color: #218838; /* Darker green on hover */
+  background-color: #556B2F; /* Darker forest green on hover */
 }
 
 /* Success and error messages */
 .success-message {
-  color: #28a745; /* Green for success */
+  color: #6B8E23; /* Forest green for success */
   font-size: 16px;
   margin-top: 10px;
 }
@@ -119,9 +117,52 @@
 
 /* Additional styles */
 .task-item button:last-child {
-  background-color: #007bff; /* Blue background for the other button */
+  background-color: #6B8E23; /* Forest green background for the other button */
 }
 
 .task-item button:last-child:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #556B2F; /* Darker forest green on hover */
+}
+
+
+
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 50px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  border-bottom: 1px solid #087389;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background-color: #bfd830;
 }
