@@ -1,7 +1,0 @@
-{"compilerOptions":{ 
-//  directory for type script
-"rootDir": "./src",
-//directory for js
-"outDir":"./dist"
-}
-}
