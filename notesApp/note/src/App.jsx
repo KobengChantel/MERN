@@ -1,9 +1,11 @@
 
 
-import Signup from "./pages/signup";
+import Signup from "./pages/Signup";
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 
 
@@ -20,6 +22,7 @@ function App() {
 
     </Routes>
     
+    <ToastContainer/>
       
       </BrowserRouter>
   )
