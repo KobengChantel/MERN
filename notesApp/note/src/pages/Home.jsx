@@ -4,8 +4,10 @@ import NoteModal from '../components/NoteModal';
 import axios from 'axios';
 import NoteCard from '../components/NoteCard';
 import { toast } from 'react-toastify';
+import { useAuth } from '../context/ContextProvider';  // Import useAuth hook
 
 const Home = () => {
+  const { user } = useAuth();  // Get the user state from context
   const [isModalOpen, setModalOpen] = useState(false);  // Modal visibility state
   const [filteredNotes, setFilteredNotes] = useState([]);  // Filtered notes based on search query
   const [notes, setNotes] = useState([]);  // All notes fetched from backend
@@ -55,7 +57,6 @@ const Home = () => {
 
   // Function to add a new note
   const addNote = async (title, description) => {
-    
     try {
       const response = await axios.post(
         'http://localhost:5000/api/note/add',  // POST request to add a new note
@@ -132,17 +133,19 @@ const Home = () => {
             <NoteCard key={note._id} note={note} onEdit={onEdit} deleteNote={deleteNote} />
           ))
         ) : (
-          <p>No notes</p>  // Display message if no notes available
+          <p>There are no notes available.</p>  // Display message if no notes available
         )}
       </div>
 
-      {/* Button to open the modal for adding a new note */}
-      <button
-        onClick={() => setModalOpen(true)}
-        className='fixed right-4 bottom-4 text-2xl bg-teal-500 text-white font-bold p-4 rounded-full'
-      >
-        +
-      </button>
+      {/* Conditionally render the button only if the user is logged in */}
+      {user && (
+        <button
+          onClick={() => setModalOpen(true)}
+          className='fixed right-4 bottom-4 text-2xl bg-teal-500 text-white font-bold p-4 rounded-full'
+        >
+          +
+        </button>
+      )}
 
       {/* Display the modal if isModalOpen is true */}
       {isModalOpen && (
@@ -159,4 +162,3 @@ const Home = () => {
 };
 
 export default Home;
- 
