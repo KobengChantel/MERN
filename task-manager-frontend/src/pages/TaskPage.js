@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaEllipsisV } from 'react-icons/fa'; // Import the three-dot icon
 import '../styles/taskpage.css'; // Import the CSS file
 
-import TaskSearch from '../components/TaskSearch';
+// import TaskSearch from '../components/TaskSearch';
 
 const TaskPage = () => {
   const [newTask, setNewTask] = useState({ title: '', description: '', dueDate: '', priority: '' });
@@ -109,7 +109,7 @@ const TaskPage = () => {
       </div>
 
       <h1>Task Manager</h1>
-      <TaskSearch />
+      {/* <TaskSearch /> */}
       
       <h2>{editTask ? 'Edit Task' : 'Create Task'}</h2>
       <form onSubmit={editTask ? handleUpdateTask : handleCreateTask} className="task-form">

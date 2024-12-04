@@ -12,7 +12,7 @@ import UserProfilePage from './pages/UserProfilePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-// import './App.css'; // Import App CSS for overall styling
+ import './index.css'; // Import App CSS for overall styling
 
 import HomePage from './pages/HomePage';
 

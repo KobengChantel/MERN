@@ -1,3 +1,11 @@
+body {
+  background-color: #8A9A5B;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+
 .homepage-container {
   display: flex;
   flex-direction: column;
