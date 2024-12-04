@@ -12,7 +12,7 @@ import UserProfilePage from './pages/UserProfilePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-import './App.css'; // Import App CSS for overall styling
+// import './App.css'; // Import App CSS for overall styling
 
 import HomePage from './pages/HomePage';
 
@@ -22,6 +22,7 @@ const App = () => (
       <AuthProvider>
         <Routes>
         <Route path="/" element={<HomePage />} />
+        
           <Route path="/tasks" element={<ProtectedRoute element={TaskPage} />} />
           <Route path="/userprofile" element={<UserProfilePage />} />
         </Routes>

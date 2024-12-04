@@ -7,8 +7,6 @@ import { FaEllipsisV } from 'react-icons/fa'; // Import the three-dot icon
 import '../styles/taskpage.css'; // Import the CSS file
 
 import TaskSearch from '../components/TaskSearch';
-import ArchivedTasks from '../components/ArchivedTasks';
-import TaskStatistics from '../components/TaskStatistics';
 
 const TaskPage = () => {
   const [newTask, setNewTask] = useState({ title: '', description: '', dueDate: '', priority: '' });
@@ -112,9 +110,7 @@ const TaskPage = () => {
 
       <h1>Task Manager</h1>
       <TaskSearch />
-      <ArchivedTasks userId={userId} />
-      <TaskStatistics userId={userId} />
-
+      
       <h2>{editTask ? 'Edit Task' : 'Create Task'}</h2>
       <form onSubmit={editTask ? handleUpdateTask : handleCreateTask} className="task-form">
         <input

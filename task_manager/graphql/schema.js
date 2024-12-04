@@ -58,7 +58,8 @@ restoreTask(id: ID!): Task
 
    updateUser(id: ID!, username: String, email: String, password: String, gender: String, age: Int, city: String): User
 
-   searchTasks(title: String,dueDate: String,  description: String, priority: String): [Task]
+   searchTasks(title: String): [Task]
+
   
   }
 

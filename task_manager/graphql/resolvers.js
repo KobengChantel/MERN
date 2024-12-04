@@ -42,49 +42,50 @@ module.exports = {
 
   createTask: async ({ title, description, dueDate, priority, userId }) => {
     const user = await User.findById(userId);
-
+  
     if (!user) {
       throw new Error('User not found');
     }
-
-    // Parse the dueDate using moment
+  
+    // Ensure dueDate is a valid Unix timestamp or date string
     let parsedDueDate;
     try {
-      parsedDueDate = moment(dueDate, 'YYYY/MM/DD'); // Adjust format according to the input
+      // If dueDate is a Unix timestamp (in milliseconds), moment will parse it correctly.
+      parsedDueDate = moment(dueDate);  // Parse the dueDate value (Unix timestamp or string)
+      
       if (!parsedDueDate.isValid()) {
         throw new Error('Invalid date format');
       }
+  
+      // Log the formatted date in 'YYYY/MM/DD' format (optional)
+      console.log(parsedDueDate.format('YYYY/MM/DD'));  // Output: formatted date as 'YYYY/MM/DD'
+      
     } catch (error) {
       throw new Error('Invalid dueDate format');
     }
-
+  
+    // Create a new task with the parsed and formatted date
     const task = new Task({
       title,
       description,
-      dueDate: parsedDueDate.toDate(), // Convert moment object to a JavaScript Date object
+      dueDate: parsedDueDate.toDate(),  // Convert the moment object to a JavaScript Date object
       priority,
       user: userId,
     });
-
+  
     const savedTask = await task.save();
     user.tasks.push(savedTask);
     await user.save();
-
-    
+  
     return savedTask;
   },
   
-  searchTasks: async ({ title, description, priority }) => {
+  
+  searchTasks: async ({ title }) => {
     // Build the search query
     let searchQuery = {};
     if (title) {
-      searchQuery.title = { $regex: title, $options: 'i' }; // Case-insensitive search
-    }
-    if (description) {
-      searchQuery.description = { $regex: description, $options: 'i' }; // Case-insensitive search
-    }
-    if (priority) {
-      searchQuery.priority = priority;
+      searchQuery.title = { $regex: title, $options: 'i' }; 
     }
 
     // Perform the search
@@ -92,28 +93,7 @@ module.exports = {
     return tasks;
   },
 
-  getTaskStatistics: async ({ userId }) => {
-    // Check if user exists
-    const user = await User.findById(userId);
-    if (!user) {
-      throw new Error('User not found');
-    }
-
-    // Count total tasks
-    const totalTasks = await Task.countDocuments({ user: userId });
-
-    // Count completed tasks
-    const completedTasks = await Task.countDocuments({ user: userId, completed: true });
-
-    // Count tasks in progress
-    const inProgressTasks = await Task.countDocuments({ user: userId, completed: false });
-
-    return {
-      totalTasks,
-      completedTasks,
-      inProgressTasks
-    };
-  },
+  
 
   updateTask: async ({ id, title, description, dueDate, priority, completed }) => {
     const task = await Task.findById(id);
