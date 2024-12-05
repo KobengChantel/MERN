@@ -1,5 +1,5 @@
-const User = require('../../models/User'); // Adjust path if needed
-const generateToken = require('../../utils/generateToken');
+const User = require('./task_manager/models/User'); // Adjust path if needed
+const generateToken = require('./task_manager/utils/generateToken');
 
 module.exports = {
   getUser: async ({ id }) => {

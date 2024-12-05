@@ -1,11 +1,35 @@
-const Task = require('../../models/Task'); // Adjust path if needed
-const User = require('../../models/User');
+const Task = require('./task_manager/models/Task'); // Adjust path if needed
+const User = require('./task_manager/models/User');
 const moment = require('moment');
 
 module.exports = {
-  getTasks: async ({ userId }) => {
-    return await Task.find({ user: userId });
-  },
+  // getTasks: async ({ userId }) => {
+  // const tasks = await Task.find({ user: userId });
+  // Format the dueDate to a human-readable format using Moment.js
+  // const formattedTasks = tasks.map(task => ({
+  //   ...task.toObject(), // Convert Mongoose document to plain JavaScript object
+//     dueDate: moment(task.dueDate).format('MMMM DD, YYYY') // Format the date
+//   }));
+
+//   return formattedTasks;
+// },
+
+
+getTasks: async ({ userId }) => {
+  const tasks = await Task.find({ user: userId }).lean(); // Fetch tasks as plain objects
+
+  const formattedTasks = tasks.map((task) => {
+    console.log(task.dueDate); // Debug: Log the original dueDate
+    return {
+      ...task,
+      dueDate: moment(task.dueDate).isValid()
+        ? moment(task.dueDate).format('MMMM DD, YYYY') // Format if valid
+        : 'Invalid Date', // Fallback for invalid dates
+    };
+  });
+
+  return formattedTasks;
+},
 
   createTask: async ({ title, description, dueDate, priority, userId }) => {
     const user = await User.findById(userId);

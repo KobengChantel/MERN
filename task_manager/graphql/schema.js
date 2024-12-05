@@ -36,8 +36,8 @@ type TaskStatistics {
   type Query {
     getUser(id: ID!): User
     getTasks(userId: ID!): [Task]
-    getArchivedTasks(userId: ID!): [Task]
-     getTaskStatistics(userId: ID!): TaskStatistics
+      searchTasks(title: String): [Task]  
+
   }
 
   type Mutation {
@@ -56,14 +56,8 @@ restoreTask(id: ID!): Task
 
     logout: Boolean
 
-   updateUser(id: ID!, username: String, email: String, password: String, gender: String, age: Int, city: String): User
+  //  updateUser(id: ID!, username: String, email: String, password: String, gender: String, age: Int, city: String): User
 
-   searchTasks(title: String): [Task]
-
-  
-  }
-
- 
 
   schema {
     query: Query

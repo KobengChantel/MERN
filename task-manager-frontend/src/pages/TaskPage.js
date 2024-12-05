@@ -4,6 +4,7 @@ import { GET_TASKS, GET_USER } from '../graphql/queries'; // Adjust path if nece
 import { CREATE_TASK, UPDATE_TASK, DELETE_TASK } from '../graphql/mutations'; // Adjust path if necessary
 import { useNavigate } from 'react-router-dom';
 import { FaEllipsisV } from 'react-icons/fa'; // Import the three-dot icon
+import moment from 'moment';  // Import moment.js for date formatting
 import '../styles/taskpage.css'; // Import the CSS file
 
 // import TaskSearch from '../components/TaskSearch';
@@ -91,6 +92,29 @@ const TaskPage = () => {
 
   const userId = localStorage.getItem('userId'); // Retrieve user ID
 
+  // Function to handle and format dueDate
+  const formatDueDate = (dueDate) => {
+    // Try to parse the date as a Unix timestamp (milliseconds)
+    let formattedDate = moment(dueDate);
+    
+    // Check if moment is valid
+    if (!formattedDate.isValid()) {
+      // If not valid, try if it's a Unix timestamp in milliseconds
+      const timestamp = parseInt(dueDate, 10);
+      if (!isNaN(timestamp)) {
+        formattedDate = moment(timestamp);
+      }
+    }
+    
+    // If the date is still not valid, return 'Invalid Date'
+    if (!formattedDate.isValid()) {
+      return 'Invalid Date';
+    }
+
+    // Return the formatted date
+    return formattedDate.format('MMMM DD, YYYY');
+  };
+
   return (
     <div className="taskpage-container">
       <div className="header">
@@ -152,7 +176,7 @@ const TaskPage = () => {
             <li key={task.id} className="task-item">
               <h3>{task.title}</h3>
               <p>{task.description}</p>
-              <p><strong>Due Date:</strong> {task.dueDate}</p>
+              <p><strong>Due Date:</strong> {formatDueDate(task.dueDate)}</p> {/* Format the dueDate */}
               <p><strong>Priority:</strong> {task.priority}</p>
               <button onClick={() => setEditTask(task)}>Edit</button>
               <button onClick={() => handleDeleteTask(task.id)}>Delete</button>

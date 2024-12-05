@@ -40,6 +40,8 @@ module.exports = {
 
 
 
+  // const moment = require('moment');
+
   createTask: async ({ title, description, dueDate, priority, userId }) => {
     const user = await User.findById(userId);
   
@@ -47,51 +49,39 @@ module.exports = {
       throw new Error('User not found');
     }
   
-    // Ensure dueDate is a valid Unix timestamp or date string
-    let parsedDueDate;
-    try {
-      // If dueDate is a Unix timestamp (in milliseconds), moment will parse it correctly.
-      parsedDueDate = moment(dueDate);  // Parse the dueDate value (Unix timestamp or string)
-      
-      if (!parsedDueDate.isValid()) {
-        throw new Error('Invalid date format');
-      }
-  
-      // Log the formatted date in 'YYYY/MM/DD' format (optional)
-      console.log(parsedDueDate.format('YYYY/MM/DD'));  // Output: formatted date as 'YYYY/MM/DD'
-      
-    } catch (error) {
+    // Parse and validate the dueDate
+    const parsedDueDate = moment(dueDate);
+    if (!parsedDueDate.isValid()) {
       throw new Error('Invalid dueDate format');
     }
   
-    // Create a new task with the parsed and formatted date
+    // Create the new task
     const task = new Task({
       title,
       description,
-      dueDate: parsedDueDate.toDate(),  // Convert the moment object to a JavaScript Date object
+      dueDate: parsedDueDate.toDate(), // Convert moment object to JavaScript Date
       priority,
       user: userId,
     });
   
+    // Save the task and associate it with the user
     const savedTask = await task.save();
     user.tasks.push(savedTask);
     await user.save();
   
-    return savedTask;
+    // Return the formatted task
+    return {
+      id: savedTask._id.toString(), // Ensure `id` is included
+      title: savedTask.title,
+      description: savedTask.description,
+      dueDate: moment(savedTask.dueDate).format('MMMM DD, YYYY'), // Format dueDate
+      priority: savedTask.priority,
+      completed: savedTask.completed,
+    };
   },
   
   
-  searchTasks: async ({ title }) => {
-    // Build the search query
-    let searchQuery = {};
-    if (title) {
-      searchQuery.title = { $regex: title, $options: 'i' }; 
-    }
-
-    // Perform the search
-    const tasks = await Task.find(searchQuery);
-    return tasks;
-  },
+ 
 
   
 
@@ -123,31 +113,7 @@ module.exports = {
     return task;
   },
 
-  getArchivedTasks: async ({ userId }) => {
-    // Check if user exists
-    const user = await User.findById(userId);
-    if (!user) {
-      throw new Error('User not found');
-    }
-
-    // Fetch tasks that are archived
-    return await Task.find({ user: userId, archived: true });
-  },
-
-  restoreTask: async ({ id }) => {
-    const task = await Task.findById(id);
-
-    if (!task) {
-      throw new Error('Task not found');
-    }
-
-    // Set the task as not archived
-    task.archived = false;
-    await task.save();
-
-    return task;
-  },
-
+ 
   login: async ({ email, password }) => {
     const user = await User.findOne({ email });
 
@@ -171,21 +137,21 @@ module.exports = {
     return true; // Typically handled by clearing the token on the client side
   },
 
-  updateUser: async ({ id, username, email, password, gender, age, city }) => {
-    const user = await User.findById(id);
+  // updateUser: async ({ id, username, email, password, gender, age, city }) => {
+  //   const user = await User.findById(id);
 
-    if (!user) {
-      throw new Error('User not found');
-    }
+  //   if (!user) {
+  //     throw new Error('User not found');
+  //   }
 
-    if (username) user.username = username;
-    if (email) user.email = email;
-    if (password) user.password = password; // Ensure password is hashed before saving
-    if (gender) user.gender = gender;
-    if (age) user.age = age;
-    if (city) user.city = city;
+  //   if (username) user.username = username;
+  //   if (email) user.email = email;
+  //   if (password) user.password = password; // Ensure password is hashed before saving
+  //   if (gender) user.gender = gender;
+  //   if (age) user.age = age;
+  //   if (city) user.city = city;
 
-    const updatedUser = await user.save();
-    return updatedUser;
-  },
+  //   const updatedUser = await user.save();
+  //   return updatedUser;
+  // },
 };
